@@ -77,11 +77,15 @@ export default {
   },
   methods: {
     showarticlepage(data) {
-      if (!this.isartpage) {
-        this.$router.push({ name: "articlepage", params: { content: data } });
-      } else {
-        this.$emit("changedata", data);
-      }
+      // if (!this.isartpage) {
+      this.$router.push({
+        path: `/articlepage/${data.articleTitle}`,
+        query: { content: data }
+        // params: { content: data }
+      });
+      // } else {
+      //   this.$emit("changedata", data);
+      // }
     },
     async searkeywords(e) {
       if (!e) {
@@ -100,7 +104,7 @@ export default {
       }
     },
     selectName(e) {
-      this.$router.push("/");
+      this.$router.push(`/user/${e}`);
       let Json = {
         data: e,
         type: "username"
@@ -108,6 +112,7 @@ export default {
       this.$store.commit("selectArticle", Json);
     },
     selectType(e) {
+      this.$router.push(`/article/${e}`);
       let Json = {
         data: e,
         type: "articletype"

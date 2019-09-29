@@ -20,7 +20,8 @@ export default new Vuex.Store({
     topbarflag: false,
     switch1: false,
     overlay: false,
-    carouselflag: false
+    carouselflag: false,
+    navigatflag: false
   },
   mutations: {
     selectArticle(state, e) {
@@ -55,7 +56,7 @@ export default new Vuex.Store({
       state.homeflag = !state.homeflag;
     },
     addArticleItem(state, data) {
-      state.ArticleData.unshift(data);
+      // state.ArticleData.unshift(data);
       state.articleDataTemp.unshift(data)
       this.commit('filterUser')
     },
@@ -112,6 +113,14 @@ export default new Vuex.Store({
         }
       });
       state.serchlist = newlist;
+    },
+
+    requestImg(state, json) {
+      axios.post(`/picture`, json).then(res => {
+        state.urls = state.tempurls = res.data;
+        state.loading = false;
+        // console.log(res.data);
+      });
     },
 
   }

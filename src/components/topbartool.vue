@@ -28,9 +28,7 @@
     <v-tooltip bottom>
       <template v-slot:activator="{ on }">
         <v-btn v-on="on" icon>
-          <v-icon :color="$store.state.sidecolor" @click="myEnshrine"
-            >mdi-heart</v-icon
-          >
+          <v-icon :color="$store.state.sidecolor" @click="myEnshrine">mdi-heart</v-icon>
         </v-btn>
       </template>
       <span>查看已收藏的图片</span>

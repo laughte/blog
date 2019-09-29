@@ -52,7 +52,11 @@
       <v-icon class="ml-2" small color="white">mdi-chat-processing</v-icon>评论
     </v-sheet>
     <div class="msgform">
-      <div class="msguserinfo"></div>
+      <!-- <div class="msguserinfo"> -->
+      <v-avatar class="profile" size="60">
+        <img :src="$store.state.user.imgsrc" alt />
+      </v-avatar>
+      <!-- </div> -->
       <textarea placeholder="请输入你想说的话吧 ! 5个字以上哦" v-model="msgcontent"></textarea>
     </div>
     <div class="msgbtn">
@@ -102,6 +106,7 @@ export default {
         let msgitem = {
           articleId: this.contdata._id,
           userId: this.$store.state.user._id,
+          avatar: this.$store.state.user.imgsrc,
           username: this.$store.state.user.username,
           time: this.formatDate(date),
           msg: this.msgcontent,

@@ -41,7 +41,7 @@
         <v-divider></v-divider>
 
         <v-card-text class="white--text">
-          &copy {{ new Date().getFullYear() }} —
+          &copy; {{ new Date().getFullYear() }} —
           <strong>香亦随风散</strong>
         </v-card-text>
       </v-card>
@@ -71,7 +71,9 @@ export default {
       delete: false
     });
   },
-  created() {}
+  created() {
+    this.$store.commit("requestImg", {});
+  }
 };
 </script>
 <style>

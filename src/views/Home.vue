@@ -51,22 +51,38 @@
   <v-row justify="center">
     <v-col class="box" md="8" lg="6">
       <!-- <transition-group apper> -->
-      <card
-        class="mb-5 cardanimate"
-        :contentdata="e"
-        :key="i"
-        v-for="(e, i) in $store.state.ArticleData.slice((page-1)*7,7*page)"
-        :id="e._id"
-      />
+
+      <v-timeline reverse align-top dense>
+        <v-timeline-item
+          v-for="(item, i) in $store.state.ArticleData.slice((page-1)*7,7*page)"
+          :key="i"
+          :color="item.color"
+          :icon="item.icon"
+        >
+          <template v-slot:icon>
+            <v-avatar>
+              <img v-if="item.avatar" :src="item.avatar" />
+            </v-avatar>
+          </template>
+          <template v-slot:opposite>
+            <span>Tus eu perfecto</span>
+          </template>
+
+          <card class="mb-5 cardanimate" :contentdata="item" :key="i" :id="item._id" />
+        </v-timeline-item>
+      </v-timeline>
+
       <!-- </transition-group> -->
       <div class="text-center">
-        <v-pagination
-          circle
-          v-model="page"
-          :length="Math.ceil($store.state.ArticleData.length/10)"
-          prev-icon="mdi-menu-left"
-          next-icon="mdi-menu-right"
-        ></v-pagination>
+        <a href="#">
+          <v-pagination
+            circle
+            v-model="page"
+            :length="Math.ceil($store.state.ArticleData.length/7)"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
+          ></v-pagination>
+        </a>
       </div>
     </v-col>
 

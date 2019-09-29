@@ -1,16 +1,17 @@
 <style lang="scss"></style>
 <template>
-  <v-app-bar dense flat color="white">
+  <v-app-bar width="100%" dense flat color="white">
+    <v-app-bar-nav-icon @click="$store.state.navigatflag=!$store.state.navigatflag"></v-app-bar-nav-icon>
     <!-- <v-icon
       :color="$store.state.sidecolor"
       @click="$store.state.sideflag = !$store.state.sideflag"
     >mdi-tilde</v-icon>-->
-<!-- 
+    <!-- 
     <v-app-bar-nav-icon
       :color="$store.state.sidecolor"
       @click="$store.state.sideflag = !$store.state.sideflag"
-    ></v-app-bar-nav-icon> -->
-    <v-toolbar-title class="mx-2" >
+    ></v-app-bar-nav-icon>-->
+    <v-toolbar-title class="mx-2">
       <v-btn :color="$store.state.sidecolor" to="/" icon>
         <v-icon>mdi-home</v-icon>
       </v-btn>
@@ -19,8 +20,8 @@
     <topbartool v-if="this.$router.app._route.fullPath === '/picture'" />
 
     <v-text-field
-    class="d-none d-sm-flex" 
-    flat
+      class="d-none d-sm-flex"
+      flat
       single-line
       @change="searkeywords"
       v-else
@@ -28,7 +29,6 @@
       prepend-icon="mdi-magnify"
       v-model="keywords"
       hide-details
-  
       placeholder="文章搜索"
     ></v-text-field>
 
@@ -160,6 +160,11 @@ export default {
         this.$store.commit("readDataFormDB", Json);
       }
     }
+  },
+  beforeRouteLeave(to, from, next) {
+    // 设置下一个路由的 meta
+    to.meta.keepAlive = false; // 让 A 不缓存，即刷新
+    next();
   }
 };
 </script>

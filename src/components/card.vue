@@ -33,11 +33,17 @@
 
 <template>
   <!-- <v-hover flat :open-delay="100" v-slot:default="{ hover }"> -->
-  <v-card hover :open-delay="100" flat>
-    <v-container>
+  <v-card :color="getColor(contentdata.articletype)" dark hover :open-delay="100" flat>
+    <v-card-title v-html="contentdata.articleTitle"></v-card-title>
+
+    <v-container class="white text--primary">
       <!-- <v-card flat color="#385F73" dark> -->
+
       <v-card-text>
         <p>
+          <!-- <v-avatar class="profile" size="35">
+            <img :src="contentdata.avatar" alt />
+          </v-avatar>-->
           <v-icon :color="getColor(contentdata.articletype)" small>mdi-account-edit</v-icon>
           {{ contentdata.username ? contentdata.username : "未知用户" }}
           <v-icon :color="getColor(contentdata.articletype)" small>mdi-file</v-icon>
@@ -45,7 +51,7 @@
           <v-icon :color="getColor(contentdata.articletype)" small>mdi-calendar-range</v-icon>
           {{ contentdata.articleTime }}
         </p>
-        <div class="headline mb-2" v-html="contentdata.articleTitle"></div>
+        <!-- <div class="headline mb-2" v-html="contentdata.articleTitle"></div> -->
 
         <!-- <p
           v-html="
@@ -75,12 +81,12 @@
       </v-expand-transition>-->
 
       <v-card-actions flut>
-        <v-btn class="mx-1 d-none d-sm-flex" text disabled>&copy;{{ contentdata.articleTime }}</v-btn>
+        <!-- <v-btn class="mx-1 d-none d-sm-flex" text disabled>&copy;{{ contentdata.articleTime }}</v-btn> -->
         <!-- <div class="flex-grow-1"></div> -->
 
         <!-- <v-badge overlap class="mx-5"> -->
         <!-- <template v-slot:badge>{{contentdata.articleLike}}</template> -->
-        <v-btn class="mx-3" icon @click="addLike">
+        <v-btn :color="getColor(contentdata.articletype)" class="mx-3" icon @click="addLike">
           <v-icon small>mdi-heart</v-icon>
           <p>{{ contentdata.articleLike }}</p>
         </v-btn>
@@ -88,7 +94,7 @@
         <!-- 
           <v-badge overlap class="mx-5">
         <template v-slot:badge>{{contentdata.articleCollect}}</template>-->
-        <v-btn class="mx-3" icon @click="addCollect">
+        <v-btn :color="getColor(contentdata.articletype)" class="mx-3" icon @click="addCollect">
           <v-icon small>mdi-star</v-icon>
           <p v-text="contentdata.articleCollect"></p>
         </v-btn>
@@ -96,13 +102,18 @@
 
         <!-- <v-badge overlap class="mx-5">
         <template v-slot:badge>{{contentdata.articleReply}}</template>-->
-        <v-btn class="mx-3" icon @click="showMessageBoard">
+        <v-btn
+          :color="getColor(contentdata.articletype)"
+          class="mx-3"
+          icon
+          @click="showMessageBoard"
+        >
           <v-icon small>mdi-chat-processing</v-icon>
           <p v-text="contentdata.articleReply"></p>
         </v-btn>
         <!-- </v-badge> -->
 
-        <v-btn class="mx-3" icon @click="deleteitem">
+        <v-btn :color="getColor(contentdata.articletype)" class="mx-3" icon @click="deleteitem">
           <v-icon small>mdi-delete</v-icon>
         </v-btn>
         <div class="flex-grow-1"></div>
@@ -111,7 +122,7 @@
           :color="getColor(contentdata.articletype)"
           @click="showarticlepage(contentdata)"
           text
-        >redmore</v-btn>
+        >阅读更多</v-btn>
       </v-card-actions>
     </v-container>
     <!-- <transition appear> -->
@@ -141,7 +152,10 @@ export default {
   },
   methods: {
     showarticlepage(data) {
-      this.$router.push({ name: "articlepage", params: { content: data } });
+      this.$router.push({
+        path: `/articlepage/${data.articleTitle}`,
+        query: { content: data }
+      });
     },
     showMessageBoard() {
       this.msgBoardFlag = !this.msgBoardFlag;

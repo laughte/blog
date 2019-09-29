@@ -1,5 +1,5 @@
 <template>
-  <v-card :loading="loading">
+  <v-card :loading="$store.state.loading">
     <v-container class="pa-2" fluid>
       <v-row>
         <v-col :key="src._id" v-for="src in $store.state.urls">
@@ -14,15 +14,14 @@
             >
               <template v-slot:placeholder>
                 <v-row class="fill-height ma-0" align="center" justify="center">
-                  <v-progress-circular
-                    indeterminate
-                    color="grey lighten-5"
-                  ></v-progress-circular>
+                  <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                 </v-row>
               </template>
-              <v-list-item-subtitle class="align-end">{{
+              <v-list-item-subtitle class="align-end">
+                {{
                 src.title
-              }}</v-list-item-subtitle>
+                }}
+              </v-list-item-subtitle>
             </v-img>
             <v-card-actions>
               <cardaction :src="src" />
@@ -34,17 +33,8 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
           <v-sheet light class="mx-auto" elevation="8" max-width="1920">
-            <v-slide-group
-              v-model="model"
-              class="pa-4"
-              center-active
-              show-arrows
-            >
-              <v-slide-item
-                v-for="(e, i) in srclists"
-                :key="i"
-                v-slot:default="{ active, toggle }"
-              >
+            <v-slide-group v-model="model" class="pa-4" center-active show-arrows>
+              <v-slide-item v-for="(e, i) in srclists" :key="i" v-slot:default="{ active, toggle }">
                 <v-card
                   :color="active ? 'primary' : 'grey lighten-1'"
                   class="ma-2"
@@ -54,15 +44,8 @@
                 >
                   <v-img width="auto" height="600px" :src="e">
                     <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="grey lighten-5"
-                        ></v-progress-circular>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="grey lighten-5"></v-progress-circular>
                       </v-row>
                     </template>
                   </v-img>
@@ -72,12 +55,7 @@
           </v-sheet>
         </v-overlay>
         <v-overlay :value="$store.state.carouselflag" z-index="4">
-          <v-carousel
-            hide-delimiters
-            height="100%"
-            hide-delimiter-background
-            show-arrows-on-hover
-          >
+          <v-carousel hide-delimiters height="100%" hide-delimiter-background show-arrows-on-hover>
             <v-carousel-item v-for="(slide, i) in srclists" :key="i">
               <v-btn
                 icon
@@ -92,15 +70,8 @@
                 <v-card>
                   <v-img height="950px" width="auto" :src="slide">
                     <template v-slot:placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                        <v-progress-circular
-                          indeterminate
-                          color="gray"
-                        ></v-progress-circular>
+                      <v-row class="fill-height ma-0" align="center" justify="center">
+                        <v-progress-circular indeterminate color="gray"></v-progress-circular>
                       </v-row>
                     </template>
                   </v-img>
@@ -119,8 +90,6 @@ export default {
   components: { cardaction },
   data() {
     return {
-      loading: true,
-
       srclists: [],
 
       model: null,
@@ -128,13 +97,13 @@ export default {
     };
   },
   methods: {
-    requestImg() {
-      this.$axios.post(`/picture`, {}).then(res => {
-        this.$store.state.urls = this.$store.state.tempurls = res.data;
-        this.loading = false;
-        // console.log(res.data);
-      });
-    },
+    // requestImg() {
+    //   this.$axios.post(`/picture`, {}).then(res => {
+    //     this.$store.state.urls = this.$store.state.tempurls = res.data;
+    //     this.loading = false;
+    //     // console.log(res.data);
+    //   });
+    // },
     switchshow(src) {
       this.srclists = src.srclist;
       if (this.$store.state.switch1) {
@@ -144,9 +113,9 @@ export default {
         this.$store.state.overlay = !this.$store.state.overlay;
       }
     }
-  },
-  created() {
-    this.requestImg();
   }
+  // created() {
+  //   this.requestImg();
+  // }
 };
 </script>

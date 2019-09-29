@@ -19,6 +19,28 @@
 <template>
   <v-form :color="$store.state.sidecolor" ref="form" v-model="valid" :lazy-validation="lazy">
     <h2>注册</h2>
+    <v-avatar size="36px">
+      <img alt="Avatar" v-if="user.imgsrc" :src="user.imgsrc" />
+
+      <v-btn icon v-else color="pink" @click="avatarflag=!avatarflag">
+        <v-icon else>mdi-plus</v-icon>
+      </v-btn>
+    </v-avatar>
+
+    <v-card v-show="avatarflag" absolute top right>
+      <v-avatar
+        size="36px"
+        :key="i"
+        class="ma-4"
+        @click="imgsrcicon(e)"
+        v-for="(e,i) in $store.state.tempurls.slice(Math.random()*10,10)"
+      >
+        <img alt="Avatar" :src="e.srclist[1]" />
+      </v-avatar>
+      <v-card-actions>
+        <v-btn @click="picAvatar()" text>确认</v-btn>
+      </v-card-actions>
+    </v-card>
     <v-text-field v-model="user.username" :counter="10" :rules="nameRules" label="Name" required></v-text-field>
     <v-text-field v-model="user.email" :rules="emailRules" label="E-mail" required></v-text-field>
     <!-- <v-text-field
@@ -83,6 +105,7 @@
 <script>
 export default {
   data: () => ({
+    avatarflag: false,
     show2: false,
     show1: false,
     alertflag: false,
@@ -127,6 +150,13 @@ export default {
   }),
 
   methods: {
+    imgsrcicon(e) {
+      this.user.imgsrc = e.srclist[1];
+      console.log(this.user.imgsrc);
+    },
+    picAvatar() {
+      this.avatarflag = false;
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;

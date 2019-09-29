@@ -56,16 +56,16 @@ export default {
       this.$router.push("/");
     },
     formatDate(date) {
-      var y = date.getFullYear();
-      var m = date.getMonth() + 1;
+      let y = date.getFullYear();
+      let m = date.getMonth() + 1;
       m = m < 10 ? "0" + m : m;
-      var d = date.getDate();
+      let d = date.getDate();
       d = d < 10 ? "0" + d : d;
-      var h = date.getHours();
+      let h = date.getHours();
       h = h < 10 ? "0" + h : h;
-      var minute = date.getMinutes();
+      let minute = date.getMinutes();
       minute = minute < 10 ? "0" + minute : minute;
-      var second = date.getSeconds();
+      let second = date.getSeconds();
       second = second < 10 ? "0" + second : second;
       return y + "-" + m + "-" + d + " " + h + ":" + minute + ":" + second;
     },
@@ -79,6 +79,7 @@ export default {
         let data = {
           userId: this.$store.state.user._id,
           username: this.$store.state.user.username,
+          avatar: this.$store.state.user.imgsrc,
           articleTitle: this.articleTitle,
           articleComment: e,
           articletype: this.articletype,
@@ -95,6 +96,7 @@ export default {
             this.$store.commit("addArticleItem", res.data.ops[0]);
           })
           .catch(err => {
+            // eslint-disable-next-line no-console
             console.log(err);
           });
         this.closeBoard();

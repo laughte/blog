@@ -74,15 +74,16 @@
 </template>
 
 <script>
-import side from "../components/side.vue";
+import side from "@/components/side.vue";
 import messageboard from "@/components/MessageBoard";
+
 export default {
   components: { side, messageboard },
   data() {
     return {
       artpage: true,
       msgBoardFlag: false,
-      contdata: this.$route.params.content,
+      contdata: this.$route.query.content,
       msgContents: []
     };
   },
@@ -93,7 +94,7 @@ export default {
     showMessageBoard() {
       this.msgBoardFlag = !this.msgBoardFlag;
       let Json = {
-        articleId: this.$route.params.content._id
+        articleId: this.content._id
       };
       this.$axios.post("/blog/msgSearch", Json).then(res => {
         this.msgContents = res.data;
@@ -104,9 +105,9 @@ export default {
     },
 
     addReply() {
-      this.$route.params.content.articleReply++;
-      let _id = this.$route.params.content._id;
-      let n = this.$route.params.content.articleReply;
+      this.content.articleReply++;
+      let _id = this.content._id;
+      let n = this.content.articleReply;
       let Json = { _id, articleReply: n };
       this.$axios.post("/blog/update", Json).then(res => {
         // console.log(res.data);
@@ -114,18 +115,18 @@ export default {
     },
 
     addLike() {
-      this.$route.params.content.articleLike++;
-      let _id = this.$route.params.content._id;
-      let n = this.$route.params.content.articleLike;
+      this.content.articleLike++;
+      let _id = this.content._id;
+      let n = this.content.articleLike;
       let Json = { _id, articleLike: n };
       this.$axios.post("/blog/update", Json).then(res => {
         // console.log(res.data);
       });
     },
     addCollect() {
-      this.$route.params.content.articleCollect++;
-      let _id = this.$route.params.content._id;
-      let n = this.$route.params.content.articleCollect;
+      this.content.articleCollect++;
+      let _id = this.content._id;
+      let n = this.content.articleCollect;
       let Json = { _id, articleCollect: n };
       this.$axios.post("/blog/update", Json).then(res => {
         // console.log(res.data);
@@ -133,7 +134,7 @@ export default {
     },
     deleteitem() {
       if (this.$store.state.user.username) {
-        let e = this.$route.params.content._id;
+        let e = this.content._id;
         this.$store.commit("deleteItem", e);
       } else {
         alert("你还没登录呢");
@@ -142,7 +143,8 @@ export default {
   },
   computed: {
     content: function() {
-      return this.$route.params.content;
+      return this.$route.query.content;
+      debugger;
     }
   },
   watch: {

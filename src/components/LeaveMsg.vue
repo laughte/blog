@@ -41,8 +41,8 @@
 <template>
   <v-card flat class="mb-2">
     <v-list-item three-line>
-      <v-list-item-avatar size="60" tile>
-        <v-img></v-img>
+      <v-list-item-avatar size="40">
+        <v-img :src="msg.avatar"></v-img>
       </v-list-item-avatar>
 
       <v-list-item-content class="align-self-start">
@@ -51,7 +51,7 @@
         <v-list-item-subtitle v-text="msg.msg"></v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
-    <v-card-action>
+    <v-card-actions>
       <v-btn text v-text="msg.time"></v-btn>
 
       <v-btn class="mx-5" @click="addlike(msg._id)" icon>
@@ -59,7 +59,7 @@
         <p v-text="msg.like"></p>
       </v-btn>
       <v-icon small @click="deletemsgitem(index)">mdi-delete</v-icon>
-    </v-card-action>
+    </v-card-actions>
   </v-card>
 </template>
 <script>
